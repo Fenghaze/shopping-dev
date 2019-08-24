@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- 滚动图片 swipe -->
         <mt-swipe :auto="4000">
             <mt-swipe-item v-for="item in swipeList" :key="item.url">
                 <img :src="item.url" alt="">
