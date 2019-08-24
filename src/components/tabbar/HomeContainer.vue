@@ -1,9 +1,9 @@
 <template>
     <div>
         <mt-swipe :auto="4000">
-            <mt-swipe-item>1</mt-swipe-item>
-            <mt-swipe-item>2</mt-swipe-item>
-            <mt-swipe-item>3</mt-swipe-item>
+            <mt-swipe-item v-for="item in swipeList" :key="item.url">
+                <img :src="item.url" alt="">
+            </mt-swipe-item>
         </mt-swipe>
     </div>
 </template>
@@ -11,9 +11,39 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            swipeList: [],
+        };
+    },
+    created(){
+        this.getdata()
+        this.getimage()
     },
     methods: {
+        getdata() {
+            var that = this
+            const path = 'http://127.0.0.1:5000/api/getdata';
+            this.axios.get(path).then(function (response) {
+                console.log(response)
+                for(var i = 0; i < response.data.length; i++){
+                    console.log(response.data[i])
+                }        
+            }).catch(function (error) {
+                alert('Error ' + error);
+            })
+        },
+        getimage(){
+            var that = this
+            const path = 'http://127.0.0.1:5000/api/getimage';
+            this.axios.get(path).then(function(response){
+                for(var i = 0; i < response.data.length; i++){
+                    console.log(response.data[i])
+                    that.swipeList.push(response.data[i])
+                }        
+            }).catch(function (error){
+                alert(error)
+            })
+        }
     },
 };
 </script>
@@ -31,6 +61,11 @@ export default {
         }
         &:nth-child(3){
             background-color: yellow;
+        }
+
+        img{
+            width: 100%;
+            height: 100%
         }
     }
 }

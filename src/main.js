@@ -8,13 +8,14 @@ import app from './App.vue'
 
 import VueRouter from 'vue-router'
 import router from './router.js'
-// 数据请求，需要用到 vue-resource
-import VueResource from 'vue-resource'
+// 数据请求，需要用到 vue-axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 
 Vue.use(MintUI)
 Vue.use(VueRouter)
-Vue.user(VueResource)
+Vue.use(VueAxios, axios)
 
 
 var vm = new Vue({
