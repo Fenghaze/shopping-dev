@@ -11,11 +11,16 @@ import router from './router.js'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import moment from 'moment'
 
 Vue.use(MintUI)
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 
+// 定义全局时间戳过滤器
+Vue.filter('dateFormat', function(dataStr, pattern="YYYY-MMMM-DDDD hh:mm:ss"){
+    return moment(dataStr).format(pattern)
+})
 
 var vm = new Vue({
     el: '#app',
