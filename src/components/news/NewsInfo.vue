@@ -2,15 +2,20 @@
     <div class="newsinfo">
         <h3 class="title">{{ news.title }}</h3>
         <p class="subtitle">
-            <span>发表时间：{{ news.timestamp | dateFormat }}</span>
+            <span>发表时间：{{ news.timestamp }}</span>
             <span>点击次数：{{ news.count }}次</span>
         </p>
         <hr>
         <div class="content">{{ news.body }}</div>
+        <!-- 评论子组件 -->
+        <comment-box :news_id="this.id"></comment-box>
     </div>
 </template>
 
 <script>
+// 导入评论子组件
+import comment from '../subcomponents/Comment.vue'
+
 export default {
     data() {
         return {
@@ -32,6 +37,9 @@ export default {
             })
         }
     },
+    components:{
+        'comment-box': comment
+    }
 };
 </script>
 
