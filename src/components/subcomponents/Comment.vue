@@ -2,8 +2,8 @@
     <div class="comment">
         <br>
         <h3>发表评论</h3>
-        <textarea placeholder="评论的内容，不超过120字" maxlength="120"></textarea>
-        <mt-button type="primary" size="large">提交</mt-button>
+        <textarea placeholder="评论的内容，不超过120字" maxlength="120" v-model="body"></textarea>
+        <mt-button type="primary" size="large" @click="addcomment">提交</mt-button>
         <hr>
         <div class="comment-list">
             <div class="comment-item" v-for="(item, i) in comment_lst" :key="item.comment_id">
@@ -22,10 +22,12 @@
 
 <script>
 export default {
+    
     data() {
         return {
             comment_lst: [],
             page: 1,
+            body: ''
         };
     },
     created(){
@@ -36,7 +38,7 @@ export default {
             var that = this
             const path = 'http://127.0.0.1:5000/api/getnews/' + this.news_id + "?page=" + this.page;
             this.axios.get(path).then(function(response){
-                    that.comment_lst = response.data.comment_lst
+                that.comment_lst = response.data.comment_lst
             }).catch(function(error){
                 alert(error)
             })
@@ -44,6 +46,21 @@ export default {
         getmore(){
             this.page += 1
             this.getcomments()
+        },
+        addcomment(){
+            var that = this
+            const path = 'http://127.0.0.1:5000/api/addcomment/' + this.news_id
+            this.axios.post(path, {body: this.body})
+            .then(function(response){
+                console.log(response)
+                if(response.status === 200){
+                    var cmt = { name: '匿名用户', timestamp: Date.now(), body: that.body}
+                    that.comment_lst.shift(cmt)
+                    that.body = ''
+                }
+            }).catch(function(error){
+                console.log(error)
+            })
         }
     },
     props: ['news_id']
