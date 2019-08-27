@@ -3,7 +3,7 @@
         <br>
         <h3>发表评论</h3>
         <textarea placeholder="评论的内容，不超过120字" maxlength="120" v-model="body"></textarea>
-        <mt-button type="primary" size="large" @click="addcomment">提交</mt-button>
+        <mt-button type="primary" size="large" @click="addphotocomment">提交</mt-button>
         <hr>
         <div class="comment-list">
             <div class="comment-item" v-for="(item, i) in comment_lst" :key="item.comment_id">
@@ -36,7 +36,7 @@ export default {
     methods: {
         getcomments(){
             var that = this
-            const path = 'http://127.0.0.1:5000/api/getnews/' + this.news_id + "?page=" + this.page;
+            const path = 'http://127.0.0.1:5000/api/getphotomsg/' + this.photo_id + "?page=" + this.page;
             this.axios.get(path).then(function(response){
                 that.comment_lst = response.data.comment_lst
             }).catch(function(error){
@@ -47,9 +47,9 @@ export default {
             this.page += 1
             this.getcomments()
         },
-        addcomment(){
+        addphotocomment(){
             var that = this
-            const path = 'http://127.0.0.1:5000/api/addcomment/' + this.news_id
+            const path = 'http://127.0.0.1:5000/api/addphotocomment/' + this.photo_id
             this.axios.post(path, {body: this.body})
             .then(function(response){
                 console.log(response)
@@ -63,7 +63,7 @@ export default {
             })
         }
     },
-    props: ['news_id']
+    props: ['photo_id']
 };
 </script>
 

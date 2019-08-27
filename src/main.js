@@ -10,8 +10,12 @@ import router from './router.js'
 // 数据请求，需要用到 vue-axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import QS from 'qs';
 import moment from 'moment'
+
+import VuePreview from 'vue-preview'
+ 
+
+Vue.use(VuePreview)
 
 Vue.use(MintUI)
 Vue.use(VueRouter)

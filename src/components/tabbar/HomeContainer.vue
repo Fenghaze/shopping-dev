@@ -15,10 +15,10 @@
                         </router-link>                 
                     </li>
 		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <a href="#">
+                        <router-link to="/home/photoshare">
 		                    <span class="mui-icon mui-icon-email"></span>
 		                    <div class="mui-media-body">图片分享</div>
-                        </a>
+                        </router-link>
                     </li>
 		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                         <a href="#">
@@ -56,22 +56,9 @@ export default {
         };
     },
     created(){
-        this.getdata()
         this.getimage()
     },
     methods: {
-        getdata() {
-            var that = this
-            const path = 'http://127.0.0.1:5000/api/getdata';
-            this.axios.get(path).then(function (response) {
-                console.log(response)
-                for(var i = 0; i < response.data.length; i++){
-                    console.log(response.data[i])
-                }        
-            }).catch(function (error) {
-                alert('Error ' + error);
-            })
-        },
         getimage(){
             var that = this
             const path = 'http://127.0.0.1:5000/api/getimage';

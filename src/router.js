@@ -7,7 +7,8 @@ import CartContainer from './components/tabbar/CartContainer.vue'
 import SearchContainer from './components/tabbar/SearchContainer.vue'
 import NewsList from './components/news/NewsList.vue'
 import NewsInfo from './components/news/NewsInfo.vue'
-
+import PhotoShare from './components/photoshare/PhotoShare.vue'
+import PhotoInfo from './components/photoshare/PhotoInfo.vue'
 var router = new VueRouter({
     routes:[
         {path:'/', component: HomeContainer},
@@ -17,6 +18,8 @@ var router = new VueRouter({
         {path: '/search', component: SearchContainer},
         {path: '/home/newslist', component: NewsList},
         {path: '/home/newslist/:id', component: NewsInfo},
+        {path: '/home/photoshare', component: PhotoShare},
+        {path: '/home/photoshare/:id', component: PhotoInfo},
     ],
     // 覆盖默认的路由高亮的类
     linkActiveClass: 'mui-active'
