@@ -11,7 +11,7 @@ import PhotoShare from './components/photoshare/PhotoShare.vue'
 import PhotoInfo from './components/photoshare/PhotoInfo.vue'
 import GoodsList from './components/Goods/GoodsList.vue'
 import GoodsInfo from './components/Goods/GoodsInfo.vue'
-
+import GoodsComment from './components/subcomponents/GoodsComment.vue'
 var router = new VueRouter({
     routes:[
         {path:'/', component: HomeContainer},
@@ -25,6 +25,7 @@ var router = new VueRouter({
         {path: '/home/photoshare/:id', component: PhotoInfo},
         {path: '/home/shopping', component: GoodsList},
         {path: '/home/shopping/:id', component: GoodsInfo},
+        {path: '/home/goodscomments/:goods_id', component: GoodsComment, name: "/home/goodscomments"},
     ],
     // 覆盖默认的路由高亮的类
     linkActiveClass: 'mui-active'
