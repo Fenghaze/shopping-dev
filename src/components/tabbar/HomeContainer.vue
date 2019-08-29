@@ -21,10 +21,10 @@
                         </router-link>
                     </li>
 		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <a href="#">
-		                    <span class="mui-icon mui-icon-chatbubble"><span class="mui-badge">9</span></span>
+                        <router-link to="/home/shopping">
+		                    <span class="mui-icon mui-icon-chatbubble"><span class="mui-badge">0</span></span>
 		                    <div class="mui-media-body">商品购买</div>
-                        </a>
+                        </router-link>
                     </li>
 		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                         <a href="#">

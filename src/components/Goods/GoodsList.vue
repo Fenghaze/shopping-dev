@@ -1,0 +1,57 @@
+<template>
+    <div class="goodslst">
+        <div class="goodsitem">
+            <router-link :to="'/home/shopping/' + item.id" v-for="item in goodsList" :key="item.id">
+                <img :src="item.url">
+                <div class="info">
+                    <p class="price">￥{{item.price}}</p>
+                    <p class="count">
+                        <span>剩余：{{item.count}}件</span>
+                    </p>
+                </div>
+            </router-link>
+        </div>
+        <mt-button type="danger" size="large" plain @click="getmore">加载更多</mt-button>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            goodsList: [],
+            page: 1
+        };
+    },
+    created(){
+        this.getgoodslist()
+    },
+    methods: {
+        getgoodslist(){
+            var that = this
+            const path = 'http://127.0.0.1:5000/api/getgoods?page=' + this.page
+            console.log(this.page)
+            this.axios.get(path).then(response => {
+                that.goodsList = that.goodsList.concat(response.data)
+            })
+        },
+        getmore(){
+            this.page += 1
+            this.getgoodslist()
+        }
+    },
+};
+</script>
+
+<style scoped lang="scss">
+.goodslst{
+    display: flex;
+    flex-wrap:wrap;
+    .goodsitem{
+        width: 100%;
+        img{
+            width:100%
+        }
+    }
+}
+</style>
