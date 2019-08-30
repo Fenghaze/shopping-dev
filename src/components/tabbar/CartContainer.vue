@@ -4,7 +4,8 @@
             <div class="mui-card" v-for="(item, i) in goodslst" :key="item.id">
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        <mt-switch></mt-switch>
+                        <mt-switch v-model="$store.getters.getselected[item.id]" 
+                        @change="selectedChanged(item.id, $store.getters.getselected[item.id])"></mt-switch>
                         <div class="goods">
                             商品{{item.id}}
                             <p>
@@ -27,6 +28,7 @@
 				</div>
 			</div>
 		</div>
+            {{this.$store.getters.getselected}}
 
             {{this.$store.getters.getcount}}
     </div>
@@ -58,6 +60,14 @@ export default {
             // 点击删除， 把商品从 store 中根据 id 删除，同时使用 index 来删除 goodslst 中的商品
             this.goodslst.splice(index, 1)
             this.$store.commit('removeFromCart', id)
+        },
+        selectedChanged(id, value){
+            // 每当点击开关，把最新的 selected 状态同步到 store 中
+            console.log(id, value)
+            this.$store.commit('updateselect', {
+                id: id,
+                selected: value
+            })
         }
     },
     components:{

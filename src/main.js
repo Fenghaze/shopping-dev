@@ -34,7 +34,7 @@ var cart = JSON.parse(localStorage.getItem('cart') || '[]')
 
 var store = new Vuex.Store({
     state:{
-        cart: cart
+        cart: []
     },
     mutations:{
         add(state, goods){// 把商品加入到购物车
@@ -62,7 +62,6 @@ var store = new Vuex.Store({
                     return true
                 }
             })
-            console.log(state.cart)
             // 把最新的数量保存到本地总
             localStorage.setItem('cart', JSON.stringify(state.cart))
         },
@@ -75,6 +74,16 @@ var store = new Vuex.Store({
                 }
             })
             localStorage.setItem('cart', JSON.stringify(state.cart))
+        },
+        updateselect(state, info){
+            state.cart.some(item => {
+                if(item.id === info.id){
+                    item.selected = info.selected
+                    return true
+                }
+            })
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+
         }
     },
     getters:{// 相当于 computed（计算属性）
@@ -90,6 +99,13 @@ var store = new Vuex.Store({
             state.cart.forEach(item => {
                 // {id : count}
                 lst[item.id] = item.count
+            })
+            return lst
+        },
+        getselected(state){
+            var lst = {}
+            state.cart.forEach(item => {
+                lst[item.id] = item.selected
             })
             return lst
         }
