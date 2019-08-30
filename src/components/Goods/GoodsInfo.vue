@@ -1,5 +1,9 @@
 <template>
     <div class="goodsinfo-container">
+        <transition 
+            @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-show="ballFlag" ref="ball"></div>
+        </transition>
         <div class="mui-card">
 			<div class="mui-card-content">
 				<div class="mui-card-content-inner">
@@ -15,7 +19,7 @@
                         <p>购买数量：<numberbox></numberbox></p>
                         <p>
                             <span><mt-button type="primary" size="small">立即购买</mt-button></span>
-                            <span><mt-button type="danger" size="small">加入购物车</mt-button></span>
+                            <span><mt-button type="danger" size="small" @click="addgoods">加入购物车</mt-button></span>
                         </p>
 					</div>
 				</div>
@@ -43,7 +47,8 @@ export default {
         return {
             goods_id: this.$route.params.id,
             swipeList: [],
-            info: ''
+            info: '',
+            ballFlag: false
         };
     },
     created(){
@@ -77,7 +82,35 @@ export default {
                 name: "/home/goodscomments",
                 params: {goods_id}
             })
-        }   
+        },
+        addgoods(){
+            // 将商品添加到购物车
+            this.ballFlag = !this.ballFlag
+        },
+        beforeEnter(el){
+            el.style.transform="translate(0, 0)"
+        },
+        enter(el, done){
+            el.offsetWidth;
+            
+            // 动画不准确的原因：位置固定死了，无法自适应手机屏幕
+            // 小球动画优化思路
+            // 得到徽标的横纵坐标，小球的横纵坐标，然后求横纵坐标差值
+            // 使用 domObject.getBoundingClientRect() 获取
+            // 1.获取小球在页面中的位置
+            const ballPosition = this.$refs.ball.getBoundingClientRect();
+            // 2. 获取徽标在页面中的位置
+            const badgePosition = document.getElementById('badge').getBoundingClientRect()
+            const x = badgePosition.left - ballPosition.left
+            const y = badgePosition.top - ballPosition.top
+
+            el.style.transform=`translate(${x}px, ${y}px)`
+            el.style.transition = 'all 1s cubic-bezier(.4,-0.3,1,.68)'
+            done()
+        },
+        afterEnter(el){
+            this.ballFlag = !this.ballFlag
+        }
     },
     components:{
         'swipe':swipe,
@@ -87,5 +120,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.ball{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    z-index:99;
+    top:390px;
+    left: 146px;
+}
 </style>
