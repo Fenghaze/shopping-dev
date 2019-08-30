@@ -92,6 +92,15 @@ export default {
         addgoods(){
             // 将商品添加到购物车
             this.ballFlag = !this.ballFlag
+            // 拼接一个商品对象，保存到 store 中
+            var goods = {
+                id: this.goods_id,
+                count: this.selectedCount,
+                price: this.info.price,
+                selected: false
+            }
+            // 调用 store 中的方法，将商品加入公共数据 cart
+            this.$store.commit('add', goods)
         },
         beforeEnter(el){
             el.style.transform="translate(0, 0)"
