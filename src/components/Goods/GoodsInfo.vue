@@ -16,10 +16,15 @@
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<p>销售价：￥{{ this.info.price }}</p>
-                        <p>购买数量：<numberbox></numberbox></p>
+                        <p>购买数量：<numberbox @getcount="getSelectCount" :max="info.count"></numberbox></p>
                         <p>
                             <span><mt-button type="primary" size="small">立即购买</mt-button></span>
                             <span><mt-button type="danger" size="small" @click="addgoods">加入购物车</mt-button></span>
+                            <!-- 
+                                按钮属于 GoodsInfo，而数字属于 number 子组件；
+                                涉及到父子组件的嵌套时，就无法直接在父组件中使用子组件的数据；
+                                使用事件调用机制：父向子传递方法，子调用这个方法，同时把把数据当作参数，传递给这个方法
+                             -->
                         </p>
 					</div>
 				</div>
@@ -48,7 +53,8 @@ export default {
             goods_id: this.$route.params.id,
             swipeList: [],
             info: '',
-            ballFlag: false
+            ballFlag: false,
+            selectedCount: 1 // 保存用户选择的商品数量，默认为 1
         };
     },
     created(){
@@ -110,6 +116,10 @@ export default {
         },
         afterEnter(el){
             this.ballFlag = !this.ballFlag
+        },
+        getSelectCount(count){
+            // 当子组件把选中的数量传递给父组件的时候，把选中的值保存到 selecedCount 中
+            this.selectedCount = count
         }
     },
     components:{
