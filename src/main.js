@@ -53,6 +53,28 @@ var store = new Vuex.Store({
             }
             // cart 更新完成后，存储到本地的 localStorage 保存数据
             localStorage.setItem('cart', JSON.stringify(state.cart))
+        },
+        updatecount(state, goods){
+            // 修改购物车中商品的数量
+            state.cart.some(item => {
+                if(item.id === goods.id){
+                    item.count = goods.count
+                    return true
+                }
+            })
+            console.log(state.cart)
+            // 把最新的数量保存到本地总
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        },
+        removeFromCart(state, id){
+            // 删除 store 中对应的商品
+            state.cart.some(item => {
+                if (item.id === id){
+                    state.cart.splice(i, 1)
+                    return true
+                }
+            })
+            localStorage.setItem('cart', JSON.stringify(state.cart))
         }
     },
     getters:{// 相当于 computed（计算属性）
@@ -61,7 +83,15 @@ var store = new Vuex.Store({
             state.cart.forEach(item => {
                 num += item.count
             })
-            return num
+            return num    
+        },
+        getgoodsnum(state){
+            var lst = {}
+            state.cart.forEach(item => {
+                // {id : count}
+                lst[item.id] = item.count
+            })
+            return lst
         }
     }
 })

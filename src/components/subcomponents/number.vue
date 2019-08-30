@@ -13,7 +13,7 @@ export default {
         return {};
     },
     mounted(){
-        mui("mui-numbox").numbox()
+        mui(".mui-numbox").numbox()
     },
     methods: {
         countChanged(){
